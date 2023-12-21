@@ -1,0 +1,23 @@
+.home-page {
+  .main-header {
+    background-color: #000000;
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+    font-size: 30px;
+  }
+  .task-box {
+    text-align: center;
+  }
+  .task-box a {
+    display: block;
+    width: 200px; /* Set the width of each task box */
+    padding: 10px;
+    margin: 10px auto; /* Adjust margin for spacing between boxes */
+    border: 1px solid #ccc; /* Add a border */
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Box background color */
+  }
+}
