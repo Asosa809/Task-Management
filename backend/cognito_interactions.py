@@ -11,7 +11,7 @@ client = boto3.client('cognito-idp', region_name=AWS_DEFAULT_REGION)
 def sign_up(username, password, email):
     try:
         response = client.sign_up(
-            ClientId="7np7ttr95tuo0odl6l4hu284fp",
+            ClientId="your_client_id",
             Username=username,
             Password=password,
             UserAttributes=[
@@ -35,7 +35,7 @@ def sign_up(username, password, email):
 def confirm_sign_up(username, confirmation_code):
     try:
         response = client.confirm_sign_up(
-            ClientId="7np7ttr95tuo0odl6l4hu284fp",
+            ClientId="your_client_id",
             Username=username,
             ConfirmationCode=confirmation_code
         )
@@ -46,7 +46,7 @@ def confirm_sign_up(username, confirmation_code):
 def sign_in(username, password):
     try:
         response = client.initiate_auth(
-            ClientId="7np7ttr95tuo0odl6l4hu284fp",
+            ClientId="your_client_id",
             AuthFlow='USER_PASSWORD_AUTH',
             AuthParameters={
                 'USERNAME': username,
