@@ -19,5 +19,5 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 .vscode/
-.env
+/.env
 #amplify-do-not-edit-end
