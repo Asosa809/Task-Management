@@ -42,7 +42,7 @@ function Verification() {
       <div className="fade-in">
         <div
           style={{
-            backgroundImage: "url('/images/sunset.png')",
+            backgroundImage: "url('/images/chrysler.png')",
             backgroundSize: "cover",
             minHeight: "100vh", // Set minimum height to fill viewport
           }}

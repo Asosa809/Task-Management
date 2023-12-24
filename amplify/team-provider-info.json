@@ -1,25 +1,24 @@
 {
-  "staging": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-taskmg-staging-200330-authRole",
-      "UnauthRoleArn": "arn:aws:iam::665143535105:role/amplify-taskmg-staging-200330-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::665143535105:role/amplify-taskmg-staging-200330-authRole",
+      "AuthRoleName": "amplify-taskmanageapp-dev-175816-authRole",
+      "UnauthRoleArn": "arn:aws:iam::665143535105:role/amplify-taskmanageapp-dev-175816-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::665143535105:role/amplify-taskmanageapp-dev-175816-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-taskmg-staging-200330-deployment",
-      "UnauthRoleName": "amplify-taskmg-staging-200330-unauthRole",
-      "StackName": "amplify-taskmg-staging-200330",
-      "StackId": "arn:aws:cloudformation:us-east-1:665143535105:stack/amplify-taskmg-staging-200330/8437d230-9de0-11ee-91a6-0e7e2c57393b",
-      "AmplifyAppId": "d31x3smq31p58s"
+      "DeploymentBucketName": "amplify-taskmanageapp-dev-175816-deployment",
+      "UnauthRoleName": "amplify-taskmanageapp-dev-175816-unauthRole",
+      "StackName": "amplify-taskmanageapp-dev-175816",
+      "StackId": "arn:aws:cloudformation:us-east-1:665143535105:stack/amplify-taskmanageapp-dev-175816/c2f8a850-a1e6-11ee-94d7-0ebb8c3ef60f",
+      "AmplifyAppId": "d1av0majqusy6m"
     },
     "categories": {
-      "function": {
-        "taskMgLambda": {}
-      },
       "auth": {
-        "taskmg": {}
-      },
-      "api": {
-        "taskmg": {}
+        "taskmanageappd473d592": {
+          "userPoolId": "us-east-1_EK9vJbhr2",
+          "userPoolName": "task-pool",
+          "webClientId": "7np7ttr95tuo0odl6l4hu284fp",
+          "nativeClientId": "7np7ttr95tuo0odl6l4hu284fp"
+        }
       }
     }
   }

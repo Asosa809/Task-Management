@@ -37,7 +37,7 @@ function Login() {
     <div className="fade-in">
       <div
         style={{
-          backgroundImage: "url('/images/stars.png')",
+          backgroundImage: "url('/images/nyc.png')",
           backgroundSize: "cover",
           minHeight: "100vh", // Set minimum height to fill viewport
         }}

@@ -19,7 +19,7 @@ const Header = () => {
       <div className="fade-in">
         <div
           style={{
-            backgroundImage: "url('/images/gradient.png')",
+            backgroundImage: "url('/images/city.png')",
             backgroundSize: "cover",
             minHeight: "100vh", // Set minimum height to fill viewport
           }}
@@ -70,11 +70,11 @@ const Header = () => {
                   Our Task Management app helps you organize, prioritize, and
                   manage your tasks effectively.
                 </p>
-                <ul>
-                  <li>Create tasks with ease</li>
-                  <li>Retrieve tasks created</li>
-                  <li>Made an error? Update the task</li>
-                  <li>Delete tasks you no longer need</li>
+                <ul className="task-direction">
+                  <p>Create tasks with ease</p>
+                  <p>Retrieve tasks created</p>
+                  <p>Made an error? Update the task</p>
+                  <p>Delete tasks you no longer need</p>
                 </ul>
               </div>
             </div>

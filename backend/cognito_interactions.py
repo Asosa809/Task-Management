@@ -2,16 +2,18 @@ import boto3
 import os
 from dotenv import load_dotenv
 
-CLIENT_ID = os.getenv("CLIENT_ID"),
+CLIENT_ID = os.getenv("CLIENT_ID")
+
 AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
 
 # Initialize Cognito client
 client = boto3.client('cognito-idp', region_name=AWS_DEFAULT_REGION)
 
 def sign_up(username, password, email):
+    
     try:
         response = client.sign_up(
-            ClientId="CLIENT_ID",
+            ClientId=CLIENT_ID,
             Username=username,
             Password=password,
             UserAttributes=[
@@ -35,7 +37,7 @@ def sign_up(username, password, email):
 def confirm_sign_up(username, confirmation_code):
     try:
         response = client.confirm_sign_up(
-            ClientId="CLIENT_ID",
+            ClientId=CLIENT_ID,
             Username=username,
             ConfirmationCode=confirmation_code
         )
@@ -44,9 +46,10 @@ def confirm_sign_up(username, confirmation_code):
         return {"error": "Invalid confirmation code"}
 
 def sign_in(username, password):
+    print("CLIENT_ID", CLIENT_ID)
     try:
         response = client.initiate_auth(
-            ClientId="CLIENT_ID",
+            ClientId=CLIENT_ID,
             AuthFlow='USER_PASSWORD_AUTH',
             AuthParameters={
                 'USERNAME': username,
