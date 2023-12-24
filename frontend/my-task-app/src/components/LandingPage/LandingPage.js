@@ -12,7 +12,7 @@ const Header = () => {
     setConfettiActive(true);
     setTimeout(() => {
       setConfettiActive(false);
-    }, 3000); // Duration for confetti effect
+    }, 9000); // Duration for confetti effect
   };
   return (
     <>
