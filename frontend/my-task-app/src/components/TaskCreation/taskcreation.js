@@ -1,46 +1,66 @@
-import React, { useState } from "react";
-//import { useAuth } from "./authcontext";
-//import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function TaskCreation() {
-  //  const { isAuthenticated } = useAuth();
-  //const history = useNavigate();
+function TaskCreation({ handleTaskCreation }) {
   const [successMessage, setSuccessMessage] = useState("");
   const [taskId, setTaskId] = useState("");
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [error, setError] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const datePickerRef = useRef(null);
+  const formRef = useRef(null);
+
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    setIsDatePickerOpen(true);
+    setTimeout(() => setIsDatePickerOpen(false), 100); // Delay the closing action
+    // Additional logic related to date change, if needed
+  };
+
+  const handleDatePickerClick = () => {
+    setIsDatePickerOpen(!isDatePickerOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target) &&
+        formRef.current &&
+        !formRef.current.contains(event.target)
+      ) {
+        setIsDatePickerOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if user is authenticated before allowing task creation
-    // if (!isAuthenticated) {
-    //   setError("Please sign in to create a task.");
-    //   return;
-    // }
-
     try {
       const taskData = {
-        "task-id": taskId, // Update key to 'task-id'
+        "task-id": taskId,
         task_name: taskName,
         task_description: taskDescription,
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:5000/create-task", // Your backend endpoint for task creation
+        "http://127.0.0.1:5000/create-task",
         taskData
       );
 
-      // Handle success
-      console.log(response.data); // Log the response data
+      console.log(response.data);
       setSuccessMessage("Task created successfully!");
-
-      // Optionally, you can redirect the user to another page after successful task creation
-      //history.push("/homepage");
     } catch (error) {
-      // Handle different error scenarios
       if (error.response) {
         setError(error.response.data.error || "An error occurred.");
       } else {
@@ -50,28 +70,44 @@ function TaskCreation() {
   };
 
   return (
-    <div>
+    <div className="create-task-container" ref={formRef}>
       <h2>Create a Task</h2>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {successMessage && <div style={{ color: "green" }}>{successMessage}</div>}
+      <div onClick={handleDatePickerClick}>
+        <DatePicker
+          selected={startDate}
+          onChange={handleDateChange}
+          open={isDatePickerOpen}
+          onClickOutside={() => setIsDatePickerOpen(false)}
+          onCalendarClose={() => setIsDatePickerOpen(false)}
+          ref={(r) => (datePickerRef.current = r?.input)}
+        />
+      </div>
+      {error && <div className="error-message">{error}</div>}
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
       <form onSubmit={handleSubmit}>
+        <label htmlFor="taskId">Task ID</label>
         <input
+          id="taskId"
           type="text"
-          placeholder="Task ID"
           value={taskId}
           onChange={(e) => setTaskId(e.target.value)}
         />
+        <label htmlFor="taskName">Task Name</label>
         <input
+          id="taskName"
           type="text"
-          placeholder="Task Name"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
         />
+        <label htmlFor="taskDescription">Task Description</label>
         <textarea
-          placeholder="Task Description"
+          id="taskDescription"
           value={taskDescription}
           onChange={(e) => setTaskDescription(e.target.value)}
         ></textarea>
+        {/* Include Date Picker */}
         <button type="submit">Create Task</button>
       </form>
     </div>

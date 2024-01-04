@@ -21,3 +21,40 @@
     background-color: #f9f9f9; /* Box background color */
   }
 }
+
+/* homepage.css */
+
+.menu-bar {
+  background: #333;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.menu li {
+  margin: 0;
+}
+
+.menu li a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu li a:hover {
+  background: rgb(85, 85, 85);
+}
+
+.menu.open {
+  max-height: 100px; /* Change this value based on the height of your menu */
+}
+
+/* Sample styles - adjust as needed */
