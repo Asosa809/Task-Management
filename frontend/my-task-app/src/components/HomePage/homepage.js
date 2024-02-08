@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import TaskCreation from "../TaskCreation/taskcreation";
+import GetTask from "../GetTask/GetTask";
 
 const UserContext = React.createContext();
 
@@ -11,7 +12,7 @@ function HomePage() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const userContext = useContext(UserContext);
   const [selectedTasks, setSelectedTasks] = useState([]);
-
+  const [isGetTaskOpen, setIsGetTaskOpen] = useState(false);
   const userName = userContext && userContext.user && userContext.user.username;
   const currentDate = new Date().toDateString();
 
@@ -24,6 +25,12 @@ function HomePage() {
     e.preventDefault();
     setIsCreateTaskOpen(!isCreateTaskOpen);
     setIsMenuBarOpen(false);
+  };
+
+  const toggleGetTask = (e) => {
+    e.preventDefault();
+    setIsGetTaskOpen(!isGetTaskOpen); // Assuming you have a state called isGetTaskOpen
+    setIsMenuBarOpen(false); // Assuming you want to close the menu bar when toggling the GetTask component
   };
 
   const handleTaskCreation = async (taskData) => {
@@ -90,7 +97,10 @@ function HomePage() {
               )}
             </li>
             <li>
-              <Link to="/get-tasks">View Tasks</Link>
+              <Link to="#" onClick={toggleGetTask}>
+                Get Task
+              </Link>
+              {isGetTaskOpen && <GetTask handleGetTask={handleTaskSelection} />}
             </li>
             <li>
               <Link to="/update-task">Update Tasks</Link>

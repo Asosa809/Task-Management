@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from dynamodb_interactions import create_task, get_task_by_task_id, update_task, delete_task
+from dynamodb_interactions import create_task, get_task_by_task_id, update_task, delete_task, dynamodb_item_to_json
 from cognito_interactions import sign_in, sign_up, confirm_sign_up
 
 
@@ -28,14 +28,14 @@ def create_task_route():
 
 @app.route('/get-task/<task_id>', methods=['GET'])
 def get_task_route(task_id):
-    # Call get_task_by_task_id function
-    task = get_task_by_task_id(task_id)
-    
-    # Check if task exists for the given task_id
+    # Your existing logic to fetch the task
+    task = get_task_by_task_id(task_id)  # This fetches the raw DynamoDB item
     if task:
-        return jsonify({'task': task})
+        task_json = dynamodb_item_to_json(task)  # Convert to plain JSON
+        return jsonify({'task': task_json})
     else:
-        return jsonify({'message': 'No task found for the task_id'})
+        return jsonify({'message': 'No task found for the task_id'}), 404
+
 
 
 @app.route('/update-task/<task_id>', methods=['PUT'])

@@ -54,21 +54,37 @@ def create_task(task_id, task_name, task_description):
 # Entry point of the script remains unchanged
 # ... (previous code remains unchanged)
 
+# Assuming this function is in your dynamodb_interactions.py or a similar file
+def dynamodb_item_to_json(item):
+    if not item:
+        return None
+    json_data = {}
+    for key, value in item.items():
+        if 'S' in value:
+            json_data[key] = value['S']
+        elif 'N' in value:
+            json_data[key] = str(value['N'])
+        elif 'BOOL' in value:
+            json_data[key] = value['BOOL']
+        # Add handling for other types as needed
+    return json_data
+
+
+# Modify the get_task_by_task_id function to use this conversion:
 def get_task_by_task_id(task_id):
-    # Initialize DynamoDB client
     dynamodb = initialize_dynamodb_client()
-
-    # Define your DynamoDB table name for tasks
-    table_name = "tasks"  # Replace with your actual table name
-
-    # Get task by task_id from DynamoDB
+    table_name = "tasks"  # Make sure this matches your actual table name
     response = dynamodb.get_item(
         TableName=table_name,
         Key={
             'task-id': {'S': task_id}
         }
     )
-    return response.get('Item', {})  # Return the task item or an empty dict if not found
+    item = response.get('Item', None)
+    if item:
+        return dynamodb_item_to_json(item)
+    return {}  # Return an empty dict if the task was not found
+
 
 
 
