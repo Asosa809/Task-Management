@@ -51,23 +51,30 @@ def create_task(task_id, task_name, task_description):
         return {"error": "Failed to create task"}
     
 
-# Entry point of the script remains unchanged
-# ... (previous code remains unchanged)
-
 # Assuming this function is in your dynamodb_interactions.py or a similar file
 def dynamodb_item_to_json(item):
-    if not item:
-        return None
+    # Check if the item is empty or already in JSON format (not containing DynamoDB data type annotations)
+    if not item or all(not isinstance(value, dict) for value in item.values()):
+        print("Item already in JSON format or empty:", item)
+        return item
+    
+    # Initialize an empty dictionary for the JSON data
     json_data = {}
+    
+    # Process each key-value pair in the item
     for key, value in item.items():
+        print(f"Processing key: {key}, Value: {value}")  # Debugging line to show the process
         if 'S' in value:
-            json_data[key] = value['S']
+            json_data[key] = value['S']  # Handle string data type
         elif 'N' in value:
-            json_data[key] = str(value['N'])
+            json_data[key] = str(value['N'])  # Handle number data type, convert to string for JSON compatibility
         elif 'BOOL' in value:
-            json_data[key] = value['BOOL']
-        # Add handling for other types as needed
+            json_data[key] = value['BOOL']  # Handle boolean data type
+        # Add handling for other DynamoDB data types ('L', 'M', etc.) here as needed
+    
+    print("Transformed JSON Data:", json_data)  # Debugging line to show the transformed JSON data
     return json_data
+
 
 
 # Modify the get_task_by_task_id function to use this conversion:
@@ -87,8 +94,6 @@ def get_task_by_task_id(task_id):
 
 
 
-
-# ... (previous code remains unchanged)
 
 def update_task(task_id, updated_name, updated_description):
     # Initialize DynamoDB client
