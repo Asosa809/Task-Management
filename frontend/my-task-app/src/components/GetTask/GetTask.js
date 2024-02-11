@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./GetTask.css";
 
 function GetTask() {
   const [taskId, setTaskId] = useState("");
@@ -43,7 +44,6 @@ function GetTask() {
         </button>
       </form>
       {error && <div className="error-message">{error}</div>}
-      {loading && <p>Loading...</p>}
       {task && (
         <div className="task-details">
           <h3>Task Details</h3>

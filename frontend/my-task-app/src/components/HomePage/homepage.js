@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import TaskCreation from "../TaskCreation/taskcreation";
 import GetTask from "../GetTask/GetTask";
+import UpdateTask from "../UpdateTask/UpdateTask";
+import DeleteTask from "../DeleteTask/DeleteTask";
 
 const UserContext = React.createContext();
 
@@ -13,6 +15,8 @@ function HomePage() {
   const userContext = useContext(UserContext);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [isGetTaskOpen, setIsGetTaskOpen] = useState(false);
+  const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
+  const [isDeleteTaskOpen, setIsDeleteTaskOpen] = useState(false);
   const userName = userContext && userContext.user && userContext.user.username;
   const currentDate = new Date().toDateString();
 
@@ -31,6 +35,22 @@ function HomePage() {
     e.preventDefault();
     setIsGetTaskOpen(!isGetTaskOpen); // Assuming you have a state called isGetTaskOpen
     setIsMenuBarOpen(false); // Assuming you want to close the menu bar when toggling the GetTask component
+  };
+
+  const toggleUpdateTask = () => {
+    setIsUpdateTaskOpen(!isUpdateTaskOpen);
+    // Optionally, close other menus/forms when opening UpdateTask
+    setIsCreateTaskOpen(false);
+    setIsGetTaskOpen(false);
+    // Add any other menu toggles as necessary
+  };
+
+  const toggleDeleteTask = () => {
+    setIsDeleteTaskOpen(!isDeleteTaskOpen);
+    // Optionally, close other menus/forms when this one is opened
+    setIsCreateTaskOpen(false);
+    setIsGetTaskOpen(false);
+    setIsUpdateTaskOpen(false);
   };
 
   const handleTaskCreation = async (taskData) => {
@@ -54,16 +74,6 @@ function HomePage() {
       setSelectedTasks(selectedTasks.filter((id) => id !== taskId));
     } else {
       setSelectedTasks([...selectedTasks, taskId]);
-    }
-  };
-
-  const handleDeleteSelectedTasks = async () => {
-    try {
-      // Add logic here to delete selected tasks using axios or another method
-      // You can use the selectedTasks state to get the IDs of tasks to delete
-      console.log("Deleting selected tasks:", selectedTasks);
-    } catch (error) {
-      console.error("Error deleting tasks:", error);
     }
   };
 
@@ -103,52 +113,22 @@ function HomePage() {
               {isGetTaskOpen && <GetTask handleGetTask={handleTaskSelection} />}
             </li>
             <li>
-              <Link to="/update-task">Update Tasks</Link>
+              <Link to="#" onClick={toggleUpdateTask}>
+                Update Tasks
+              </Link>
+              {isUpdateTaskOpen && <UpdateTask />}
             </li>
             <li>
-              <Link to="/delete-task">Delete Tasks</Link>
+              <Link to="#" onClick={toggleDeleteTask}>
+                Delete Tasks
+              </Link>
+              {isDeleteTaskOpen && (
+                // Here you can place your DeleteTask component or an inline form
+                <DeleteTask />
+              )}
             </li>
           </ul>
         </nav>
-
-        {/* Tasks Section */}
-        <div className="tasks-section">
-          {/* Display Created Tasks */}
-          {tasks.length > 0 && (
-            <div className="task-list">
-              {/* Select All Checkbox */}
-              <input
-                type="checkbox"
-                onChange={() => {
-                  // Logic to handle select all tasks
-                }}
-              />
-              {/* Display tasks with checkboxes */}
-              {tasks.map((task) => (
-                <div key={task.id}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleTaskSelection(task.id)}
-                  />
-                  {/* Display task details */}
-                  <span>{task.name}</span>
-                  {/* Add more task details here */}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Update Task Section (modal or component) */}
-          {/* You can create a modal or another component for updating tasks */}
-          {/* This can be shown when a task is clicked */}
-        </div>
-
-        {/* Delete Tasks Section */}
-        {selectedTasks.length > 0 && (
-          <button onClick={handleDeleteSelectedTasks}>
-            Delete Selected Tasks
-          </button>
-        )}
       </div>
     </div>
   );
