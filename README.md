@@ -3,6 +3,7 @@
 The Task Management App is a web application built to manage tasks where users can create, view, and manage their tasks.
 
 ![Task Management Web App](/frontend/my-task-app/public/images/TaskMg.png)
+![Task Management CRUD](/frontend/my-task-app/public/images/CRUD.png)
 
 ## Table of Contents
 
